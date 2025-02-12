@@ -1,4 +1,7 @@
 # Prerequisites
+output/
+
+# Prerequisites
 *.d
 
 # Compiled Object files
