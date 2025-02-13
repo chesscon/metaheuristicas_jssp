@@ -24,7 +24,7 @@ void free_instance(s_jssp *instance) {
     free(instance);
 }
 
-s_jssp * make_from_file(char *filename) {
+s_jssp * make_instance_from_file(char *filename) {
     s_jssp *inst = NULL;
     FILE *in = fopen(filename, "r");
     
@@ -39,9 +39,9 @@ s_jssp * make_from_file(char *filename) {
 
     for (int i = 0; i < num_jobs; i++) {
         for (int j=0; j < num_machs; j++) {
-            inst->jobs[i][j].job = i+1;
+            inst->jobs[i][j].job = i;
             tmpScanf = fscanf(in, "%d", &inst->jobs[i][j].machine);
-            inst->jobs[i][j].seq = j+1;
+            inst->jobs[i][j].seq = j;
             tmpScanf = fscanf(in, "%d", &inst->jobs[i][j].time);
         }
     }
@@ -55,7 +55,7 @@ void print_instance(s_jssp *inst) {
     for(int i=0; i < inst->num_jobs; i++) {
         printf("J%d :", i+1);
         for (int j=0; j < inst->num_machs; j++) {
-            printf(" (M%d, %d), ", inst->jobs[i][j].machine, inst->jobs[i][j].time);
+            printf(" (J%d[%d], M%d, %d), ", inst->jobs[i][j].job + 1, inst->jobs[i][j].seq + 1, inst->jobs[i][j].machine + 1, inst->jobs[i][j].time);
         }
         printf("\n");
     }
