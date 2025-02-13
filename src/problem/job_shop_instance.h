@@ -18,7 +18,7 @@ typedef struct {
 s_jssp * allocate_instance(int num_jobs, int num_machs);
 void free_instance(s_jssp *instance);
 
-s_jssp * make_from_file(char *filename);
+s_jssp * make_instance_from_file(char *filename);
 
 void print_instance(s_jssp *inst);
 

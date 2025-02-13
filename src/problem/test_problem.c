@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   printf("Leyendo datos del ejemplar: %s \n", filename);
   
   s_jssp *inst = NULL;
-  inst = make_from_file(filename);
+  inst = make_instance_from_file(filename);
 
   /* */
   printf("Ejemplar leido: %s \n", filename);
