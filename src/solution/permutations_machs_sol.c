@@ -60,7 +60,7 @@ s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
 
     int k=0;
 
-    while (total_availables > 0 && k < 300) {
+    while (total_availables > 0) {
         // 1. elegir una operacion aleatoria de las disponibles:
         tmp_random = rand() % total_availables;
         op_random = availables[tmp_random];
