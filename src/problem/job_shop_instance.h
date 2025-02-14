@@ -2,6 +2,7 @@
 #define JOB_SHOP_INSTANCE_H
 
 typedef struct {
+    int id;
     int job;
     int machine;
     int time;

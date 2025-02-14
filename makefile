@@ -2,28 +2,37 @@ CC=gcc
 CFLAGS=-lm
 MODE_COMPILATION=-O2
 
-SRC_DIR=src
 DATA_DIR=instances
 OUTPUT_DIR=output
+INST_TEST=$(DATA_DIR)/ft06.txt
+PREFIX_EXE=./
 
 EXE_PROBLEM=$(OUTPUT_DIR)/leer_ejemplar
-INST_TEST=$(DATA_DIR)/abz7.txt
 
-prueba_lectura: $(INST_TEST) ${EXE_PROBLEM}
-	./${EXE_PROBLEM} $(INST_TEST)
+prueba_lectura: ${OUTPUT_DIR} $(INST_TEST) ${EXE_PROBLEM}
+	${PREFIX_EXE}${EXE_PROBLEM} $(INST_TEST)
+
+${EXE_PROBLEM}: src/test/test_problem.c src/problem/*
+	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
 
 ${OUTPUT_DIR}:
 	mkdir -p ${OUTPUT_DIR}
 
-${EXE_PROBLEM}: src/problem/*.c src/problem/*.h
+
+EXE_RANDOM_SOL=$(OUTPUT_DIR)/random_sol
+
+prueba_random_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_RANDOM_SOL)
+	${PREFIX_EXE}${EXE_RANDOM_SOL} $(INST_TEST)
+
+
+${EXE_RANDOM_SOL}: src/test/test_solution.c src/problem/* src/solution/permutations_machs_sol.*
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
+	
+EXE_EVAL_SOL=$(OUTPUT_DIR)/eval_sol
+
+prueba_eval_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_EVAL_SOL)
+	${PREFIX_EXE}${EXE_EVAL_SOL} $(INST_TEST)
 
 
-EXE_RANDOM_SOL=output/random_sol
-
-prueba_random_sol: $(INST_TEST) $(EXE_RANDOM_SOL)
-	./${EXE_RANDOM_SOL} $(INST_TEST)
-
-
-${EXE_RANDOM_SOL}: src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h
+${EXE_EVAL_SOL}: src/test/test_evaluate_sol.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
