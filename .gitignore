@@ -1,6 +1,7 @@
 output/
 .vscode/
-vgcore.*
+vgcore.*}
+prueba.exe
 
 # Prerequisites
 *.d
