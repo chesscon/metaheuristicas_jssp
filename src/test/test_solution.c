@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../problem/job_shop_instance.h"
-#include "permutations_machs_sol.h"
+#include "../solution/permutations_machs_sol.h"
 
 int main(int argc, char *argv[]) {
   

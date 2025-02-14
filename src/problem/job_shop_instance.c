@@ -37,14 +37,17 @@ s_jssp * make_instance_from_file(char *filename) {
 
     inst = allocate_instance(num_jobs, num_machs);
 
+    int k = 0;
     for (int i = 0; i < num_jobs; i++) {
         for (int j=0; j < num_machs; j++) {
+            inst->jobs[i][j].id = k++;
             inst->jobs[i][j].job = i;
             tmpScanf = fscanf(in, "%d", &inst->jobs[i][j].machine);
             inst->jobs[i][j].seq = j;
             tmpScanf = fscanf(in, "%d", &inst->jobs[i][j].time);
         }
     }
+    fclose(in);
 
     return inst;
 }

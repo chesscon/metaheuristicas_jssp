@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "job_shop_instance.h"
+#include "../problem/job_shop_instance.h"
 
 int main(int argc, char *argv[]) {
   
