@@ -10,6 +10,8 @@ s_op_schedule * get_sucesor_job(s_sol_perms_machs *sol, s_op_schedule *op);
 
 void calculate_relase_times(s_sol_perms_machs *sol);
 
+void calculate_length_tails(s_sol_perms_machs *sol);
+
 void print_schedule(s_sol_perms_machs *sol);
 
 #endif
