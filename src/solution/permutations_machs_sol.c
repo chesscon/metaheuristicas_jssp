@@ -81,6 +81,8 @@ s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
         sol->machs[op_random->machine][current_free_position_mach].op = op_random;
         sol->machs[op_random->machine][current_free_position_mach].seq_m = current_free_position_mach;
         sol->machs[op_random->machine][current_free_position_mach].r = -1;
+        sol->machs[op_random->machine][current_free_position_mach].q = -1;
+        sol->machs[op_random->machine][current_free_position_mach].t = -1;
         sol->ops[op_random->id] = &sol->machs[op_random->machine][current_free_position_mach];
 
         machs_free_position[op_random->machine]++;

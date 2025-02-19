@@ -11,8 +11,11 @@ typedef struct {
     /** release date, inicio más temprano */
     int r;
 
-    /** length tail, ruta más larga hacia el final */
+    /** length tail, ruta más larga hacia el final (contando la op actual) */
     int q;
+
+    /** length tail, ruta más larga hacia el final (sin contar la op actual) */
+    int t;
 
 } s_op_schedule;
 

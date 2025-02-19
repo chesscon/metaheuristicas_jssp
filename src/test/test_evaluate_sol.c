@@ -28,6 +28,9 @@ int main(int argc, char *argv[]) {
   printf("\nCalculando: release times\n");
   calculate_relase_times(sol);
 
+  printf("\nCalculando: length tails\n");
+  calculate_length_tails(sol);
+
   /* */
   printf("\n Planificación generada: \n");
   print_schedule(sol);
