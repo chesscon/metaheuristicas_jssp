@@ -192,10 +192,8 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
 }
 
 int eval_solution(s_sol_perms_machs *sol) {
-    calculate_length_tails(sol);
-    printf("\n ****Eval_q %d *** \n", sol->makespan);
     calculate_relase_times(sol);
-    printf("\n ****Eval_r %d *** \n", sol->makespan);
+    calculate_length_tails(sol);
 
     return sol->makespan;
 }

@@ -9,6 +9,8 @@ PREFIX_EXE=./
 
 EXE_PROBLEM=$(OUTPUT_DIR)/leer_ejemplar
 
+#### LECTURA DE EJEMPLARES
+
 prueba_lectura: ${OUTPUT_DIR} $(INST_TEST) ${EXE_PROBLEM}
 	${PREFIX_EXE}${EXE_PROBLEM} $(INST_TEST)
 
@@ -21,6 +23,8 @@ ${OUTPUT_DIR}:
 
 EXE_RANDOM_SOL=$(OUTPUT_DIR)/random_sol
 
+#### GENERACION DE SOLUCIONES
+
 prueba_random_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_RANDOM_SOL)
 	${PREFIX_EXE}${EXE_RANDOM_SOL} $(INST_TEST)
 
@@ -30,6 +34,8 @@ ${EXE_RANDOM_SOL}: src/test/test_solution.c src/problem/* src/solution/permutati
 	
 EXE_EVAL_SOL=$(OUTPUT_DIR)/eval_sol
 
+#### EVALUACION DE SOLUCIONES
+
 prueba_eval_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_EVAL_SOL)
 	${PREFIX_EXE}${EXE_EVAL_SOL} $(INST_TEST)
 
@@ -37,12 +43,21 @@ prueba_eval_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_EVAL_SOL)
 ${EXE_EVAL_SOL}: src/test/test_evaluate_sol.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
 
-	
+
+#### VECINDADES
 EXE_N1=$(OUTPUT_DIR)/generate_n1
 
 prueba_n1: ${OUTPUT_DIR} $(INST_TEST) $(EXE_N1)
 	${PREFIX_EXE}${EXE_N1} $(INST_TEST)
 
-
 ${EXE_N1}: src/test/test_n1.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c src/neighborhood/*.c src/neighborhood/*.h
+	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
+
+#### BUSQUEDAS DE TRAYECTORIA
+EXE_LS=$(OUTPUT_DIR)/local_search
+
+prueba_local_search: ${OUTPUT_DIR} $(INST_TEST) $(EXE_LS)
+	${PREFIX_EXE}${EXE_LS} $(INST_TEST)
+
+${EXE_LS}: src/test/test_local_search.c src/problem/*.* src/solution/*.* src/utils.* src/neighborhood/*.* src/trajectory_search/*.*
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
