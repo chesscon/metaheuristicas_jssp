@@ -12,8 +12,6 @@ s_sol_perms_machs * allocate_sol_perms( s_jssp *inst ) {
     sol->machs = malloc( sizeof(s_op_schedule *)*inst->num_machs );
     for(int i =0; i < inst->num_machs; i++) {
         sol->machs[i] = malloc( sizeof(s_op_schedule)*inst->num_jobs );
-        for (int j = 0; j < inst->num_jobs; j++) {
-        }
     }
     sol->ops = malloc( sizeof( s_op_schedule *)*(inst->num_jobs*inst->num_machs));
     sol->makespan = INT_MAX;

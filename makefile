@@ -36,3 +36,13 @@ prueba_eval_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_EVAL_SOL)
 
 ${EXE_EVAL_SOL}: src/test/test_evaluate_sol.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
+
+	
+EXE_N1=$(OUTPUT_DIR)/generate_n1
+
+prueba_n1: ${OUTPUT_DIR} $(INST_TEST) $(EXE_N1)
+	${PREFIX_EXE}${EXE_N1} $(INST_TEST)
+
+
+${EXE_N1}: src/test/test_n1.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c src/neighborhood/*.c src/neighborhood/*.h
+	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
