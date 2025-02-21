@@ -155,8 +155,14 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
         mach_op_current->t = max_int( q_suc_mac,  q_suc_job);
         mach_op_current->q = mach_op_current->t + mach_op_current->op->time;
         
-
         sol->makespan = max_int( sol->makespan, mach_op_current->q);
+        /*
+        printf("\n ****Eval_q %d, M%d[%d], J%d[%d] *** \n", 
+            sol->makespan,
+            mach_op_current->op->machine, mach_op_current->seq_m, 
+            mach_op_current->op->job, mach_op_current->op->seq
+        );
+        */
 
         predecesor_job = get_predecesor_job(sol, mach_op_current);
 
@@ -190,6 +196,15 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
         }
 
     }
+}
+
+int eval_solution(s_sol_perms_machs *sol) {
+    calculate_length_tails(sol);
+    printf("\n ****Eval_q %d *** \n", sol->makespan);
+    calculate_relase_times(sol);
+    printf("\n ****Eval_r %d *** \n", sol->makespan);
+
+    return sol->makespan;
 }
 
 void print_schedule(s_sol_perms_machs *sol) {
