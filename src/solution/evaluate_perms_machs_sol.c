@@ -32,7 +32,6 @@ s_op_schedule * get_sucesor_job(s_sol_perms_machs *sol, s_op_schedule *op) {
 }
 
 void calculate_relase_times(s_sol_perms_machs *sol) {
-
     s_op_schedule * availables[sol->inst->num_jobs + 1]; 
     int total_availables = 0;
 
@@ -44,6 +43,11 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
 
     s_op_schedule *sucesor_job;
     s_op_schedule * sucesor_mach;
+
+    int labeleds[sol->inst->num_jobs*sol->inst->num_jobs];
+    for (int i=0; i < sol->inst->num_jobs*sol->inst->num_jobs; i++) {
+        labeleds[i] = 0;
+    }
 
     sol->makespan = 0;
 
@@ -75,6 +79,7 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
             r_pred_mac + (predecesor_mach != NULL ? predecesor_mach->op->time : 0),  
             r_pred_job + ( predecesor_job != NULL ? predecesor_job->op->time : 0 )
         );
+        labeleds[mach_op_current->op->id] = 1;
 
         sol->makespan = max_int( sol->makespan, mach_op_current->r + mach_op_current->op->time);
 
@@ -85,8 +90,8 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
         if ( 
             sucesor_job != NULL // existe el trabajo sucesor en el job
             && 
-            ( !get_predecesor_machine(sol, sucesor_job) // no tiene trabajo predecesor en la máquina del sucesor
-             || get_predecesor_machine(sol, sucesor_job)->r >= 0  // el predecesor en la maquina ya fue calendarizado
+            ( get_predecesor_machine(sol, sucesor_job) == NULL // no tiene trabajo predecesor en la máquina del sucesor
+             || labeleds[get_predecesor_machine(sol, sucesor_job)->op->id]  // el predecesor en la maquina ya fue calendarizado
             )
         ) {
             availables[total_availables] = sucesor_job;
@@ -101,7 +106,7 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
             sucesor_mach != NULL // existe el trabajo sucesor en la maquina
             &&
             (
-                !get_predecesor_job(sol, sucesor_mach) // no tiene trabajo predecesor en la máquina del sucesor
+                get_predecesor_job(sol, sucesor_mach) == NULL // no tiene trabajo predecesor en la máquina del sucesor
                 || get_predecesor_job(sol, sucesor_mach)->r >= 0 // el predecesor en el job ya fue calendarizado
             )
         ) {
@@ -127,6 +132,12 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
     s_op_schedule * sucesor_mach;
 
     sol->makespan = 0;
+
+    int labeleds[sol->inst->num_jobs*sol->inst->num_jobs];
+    for (int i=0; i < sol->inst->num_jobs*sol->inst->num_jobs; i++) {
+        labeleds[i] = 0;
+    }
+
 
     // Calculamos las operaciones finales de cada job:
     for (int i =0; i < sol->inst->num_jobs; i++) {
@@ -154,6 +165,8 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
 
         mach_op_current->t = max_int( q_suc_mac,  q_suc_job);
         mach_op_current->q = mach_op_current->t + mach_op_current->op->time;
+       
+        labeleds[mach_op_current->op->id] = 1;
         
         sol->makespan = max_int( sol->makespan, mach_op_current->q);
 
@@ -164,8 +177,8 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
         if ( 
             predecesor_job != NULL // existe el trabajo predecesor en el job
             && 
-            ( !get_sucesor_machine(sol, predecesor_job) // no tiene sucesor en la máquina del predecesor
-             || get_sucesor_machine(sol, predecesor_job)->q >= 0  // el sucesor en la maquina ya fue calculado
+            ( get_sucesor_machine(sol, predecesor_job) == NULL // no tiene sucesor en la máquina del predecesor
+             ||  labeleds[get_sucesor_machine(sol, predecesor_job)->op->id]  // el sucesor en la maquina ya fue calculado
             )
         ) {
             availables[total_availables] = predecesor_job;
