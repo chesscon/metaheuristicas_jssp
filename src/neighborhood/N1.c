@@ -86,25 +86,12 @@ int apply_and_evaluate_move_N1( s_sol_perms_machs *sol, s_move * neigbor ) {
     int pos_a = neigbor->a->seq_m;
     int pos_b = neigbor->b->seq_m;
 
-    printf("Mov: from_pos: %d, to_pos: %d \n", pos_a, pos_b);
-
-    printf("****---> PREV: a(pos=%d, seq_m=%d, job=%d), b(pos=%d, seq_m=%d, job=%d) \n",
-        pos_a, sol->machs[mach][pos_a].seq_m, sol->machs[mach][pos_a].op->job,
-        pos_b, sol->machs[mach][pos_b].seq_m, sol->machs[mach][pos_b].op->job
-    );
-
     s_operacion *tmp = sol->machs[mach][pos_a].op;
     sol->machs[mach][pos_a].op = sol->machs[mach][pos_b].op;
     sol->ops[sol->machs[mach][pos_a].op->id] = &sol->machs[mach][pos_a];
 
     sol->machs[mach][pos_b].op = tmp;
-    sol->ops[tmp->id] = &sol->machs[mach][pos_b];
-
-
-    printf("****---> AFTER: a(pos=%d, seq_m=%d, job=%d), b(pos=%d, seq_m=%d, job=%d) \n",
-        pos_a, sol->machs[mach][pos_a].seq_m, sol->machs[mach][pos_a].op->job,
-        pos_b, sol->machs[mach][pos_b].seq_m, sol->machs[mach][pos_b].op->job
-    );
+    sol->ops[sol->machs[mach][pos_b].op->id] = &sol->machs[mach][pos_b];
 
     int totalOps = sol->inst->num_jobs * sol->inst->num_machs;
     for(int i = 0; i < totalOps; i++) {
@@ -113,8 +100,7 @@ int apply_and_evaluate_move_N1( s_sol_perms_machs *sol, s_move * neigbor ) {
         sol->ops[i]->t = -1;
     }
 
-    int eval = eval_solution(sol);
-    printf("\n ****Eval %d *** \n", eval);
+    sol->makespan = eval_solution(sol);
 
     return sol->makespan;
 }

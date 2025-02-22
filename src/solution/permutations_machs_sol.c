@@ -28,6 +28,28 @@ void free_sol_perms_machs(s_sol_perms_machs *sol) {
     free(sol);
 }
 
+void copy_sol_perms(s_sol_perms_machs *src, s_sol_perms_machs *dst) {
+    dst->inst = src->inst;
+    for (int i = 0; i < src->inst->num_machs; i++ ) {
+        for(int j=0; j < src->inst->num_jobs; j++) {
+            dst->machs[i][j].op = src->machs[i][j].op;
+            dst->machs[i][j].seq_m = src->machs[i][j].seq_m;
+            dst->machs[i][j].r = src->machs[i][j].r;
+            dst->machs[i][j].t = src->machs[i][j].t;
+            dst->machs[i][j].q = src->machs[i][j].q;
+            dst->ops[dst->machs[i][j].op->id] = &dst->machs[i][j];
+        }
+    }
+    dst->makespan = src->makespan;
+}
+
+s_sol_perms_machs * clone_sol_perms(s_sol_perms_machs *src) {
+    s_sol_perms_machs *dst = allocate_sol_perms(src->inst);
+    copy_sol_perms(src, dst);
+
+    return dst;
+}
+
 void print_sol_perms_machs(s_sol_perms_machs *sol) {
     for (int i =0; i < sol->inst->num_machs; i++) {
         printf("M %d [ ", i);
