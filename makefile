@@ -61,3 +61,15 @@ prueba_local_search: ${OUTPUT_DIR} $(INST_TEST) $(EXE_LS)
 
 ${EXE_LS}: src/test/test_local_search.c src/problem/*.* src/solution/*.* src/utils.* src/neighborhood/*.* src/trajectory_search/*.*
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
+
+EXE_TS=$(OUTPUT_DIR)/tabu_search
+TIPO_VECINDAD=1
+MAX_ITERS=1000
+TAM_TABU_LIST=8
+MIN_TABU_TENURE=1
+
+prueba_tabu_search: ${OUTPUT_DIR} $(INST_TEST) $(EXE_TS)
+	${PREFIX_EXE}${EXE_TS} $(INST_TEST) $(TIPO_VECINDAD) $(MAX_ITERS) $(TAM_TABU_LIST) $(MIN_TABU_TENURE)
+
+${EXE_TS}: src/test/test_tabu_search.c src/problem/*.* src/solution/*.* src/utils.* src/neighborhood/*.* src/trajectory_search/*.*
+	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)

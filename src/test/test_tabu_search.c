@@ -4,7 +4,7 @@
 #include "../problem/job_shop_instance.h"
 #include "../solution/permutations_machs_sol.h"
 #include "../solution/evaluate_perms_machs_sol.h"
-#include "../trajectory_search/local_search.h"
+#include "../trajectory_search/tabu_search.h"
 
 int main(int argc, char *argv[]) {
   
@@ -31,7 +31,11 @@ int main(int argc, char *argv[]) {
 
   printf("\n***** Makespan: %d ***** \n", sol->makespan);
 
-  s_sol_perms_machs *local_opt = local_search_jssp(sol);
+  int max_iters = argc > 3 ? atoi(argv[3]) : 1000;
+  int max_size_tabu = argc > 4 ? atoi(argv[4]) : 15;
+  int min_tabu_tenure = argc > 5 ? atoi(argv[5]) : 5;
+
+  s_sol_perms_machs *local_opt = tabu_search_jssp(sol, max_iters, max_size_tabu, min_tabu_tenure);
 
   printf("\n Solución Optimizada \n");
   print_sol_perms_machs(local_opt);
