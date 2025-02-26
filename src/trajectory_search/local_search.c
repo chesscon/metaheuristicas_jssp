@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "trajectory_search.h"
+#include "local_search.h"
 #include "../neighborhood/N1.h"
 
 s_sol_perms_machs * local_search_jssp(s_sol_perms_machs * initial_sol) {

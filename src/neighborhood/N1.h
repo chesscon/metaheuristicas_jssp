@@ -20,7 +20,18 @@ typedef struct {
 s_neighborhood * allocate_neighborhood( int max_neighbors );
 void free_neighborhood(s_neighborhood *neighborhood);
 
+/* N1 */
+int is_critical_operation(int mach, int seq_mach, s_sol_perms_machs *sol);
+
 void generate_neighbors_n1( s_sol_perms_machs *sol, s_neighborhood * neighborhood );
+
+/* N5 */
+
+void generate_neighbors_n5( s_sol_perms_machs *sol, s_neighborhood * neighborhood );
+
+int is_bloq_ini(int mach, int seq_mach, s_sol_perms_machs *sol);
+
+int is_bloq_end(int mach, int seq_mach, s_sol_perms_machs *sol);
 
 int estimate_evaluation_neighbor( s_sol_perms_machs *sol, s_move * neighbor);
 

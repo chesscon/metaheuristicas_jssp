@@ -1,5 +1,5 @@
-#ifndef TRAJECTORY_SEARCH_H
-#define TRAJECTORY_SEARCH_H
+#ifndef LOCAL_SEARCH_H
+#define LOCAL_SEARCH_H
 
 #include "../solution/permutations_machs_sol.h"
 

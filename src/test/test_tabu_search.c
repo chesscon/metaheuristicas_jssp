@@ -1,10 +1,11 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "../problem/job_shop_instance.h"
 #include "../solution/permutations_machs_sol.h"
 #include "../solution/evaluate_perms_machs_sol.h"
-#include "../trajectory_search/local_search.h"
+#include "../trajectory_search/tabu_search.h"
 
 int main(int argc, char *argv[]) {
   
@@ -13,8 +14,8 @@ int main(int argc, char *argv[]) {
 
   printf("Leyendo datos del ejemplar: %s \n", filename);
 
-  //unsigned int seed = (unsigned int) time(NULL);
-  unsigned int seed = 1;
+  unsigned int seed = (unsigned int) time(NULL);
+  //unsigned int seed = 1;
   srand(seed);
   printf("SEED: %u \n", seed);
   
@@ -31,7 +32,15 @@ int main(int argc, char *argv[]) {
 
   printf("\n***** Makespan: %d ***** \n", sol->makespan);
 
-  s_sol_perms_machs *local_opt = local_search_jssp(sol);
+  int max_iters = argc > 3 ? atoi(argv[3]) : 1000;
+  int max_size_tabu = argc > 4 ? atoi(argv[4]) : 8;
+  /*max_size_tabu = 
+    (inst->num_jobs + ( inst->num_machs/2 ))*exp( - inst->num_jobs /  (5*inst->num_machs) )
+    + (inst->num_jobs * inst->num_machs / 2)*exp( - 5*inst->num_machs / inst->num_jobs);
+*/
+  int min_tabu_tenure = argc > 5 ? atoi(argv[5]) : 1;
+
+  s_sol_perms_machs *local_opt = tabu_search_jssp(sol, max_iters, max_size_tabu, min_tabu_tenure);
 
   printf("\n Solución Optimizada \n");
   print_sol_perms_machs(local_opt);
