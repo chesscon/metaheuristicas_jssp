@@ -64,9 +64,9 @@ ${EXE_LS}: src/test/test_local_search.c src/problem/*.* src/solution/*.* src/uti
 
 EXE_TS=$(OUTPUT_DIR)/tabu_search
 TIPO_VECINDAD=1
-MAX_ITERS=1000
-TAM_TABU_LIST=8
-MIN_TABU_TENURE=1
+MAX_ITERS=
+TAM_TABU_LIST=
+MIN_TABU_TENURE=
 
 prueba_tabu_search: ${OUTPUT_DIR} $(INST_TEST) $(EXE_TS)
 	${PREFIX_EXE}${EXE_TS} $(INST_TEST) $(TIPO_VECINDAD) $(MAX_ITERS) $(TAM_TABU_LIST) $(MIN_TABU_TENURE)
