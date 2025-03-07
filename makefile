@@ -32,15 +32,24 @@ prueba_random_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_RANDOM_SOL)
 ${EXE_RANDOM_SOL}: src/test/test_solution.c src/problem/* src/solution/permutations_machs_sol.*
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
 	
-EXE_EVAL_SOL=$(OUTPUT_DIR)/eval_sol
 
 #### EVALUACION DE SOLUCIONES
-
+EXE_EVAL_SOL=$(OUTPUT_DIR)/eval_sol
 prueba_eval_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_EVAL_SOL)
 	${PREFIX_EXE}${EXE_EVAL_SOL} $(INST_TEST)
 
 
 ${EXE_EVAL_SOL}: src/test/test_evaluate_sol.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c
+	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
+
+
+#### REPARACION DE SOLUCIONES
+EXE_REP_SOL=$(OUTPUT_DIR)/repara_sol
+prueba_repara_sol: ${OUTPUT_DIR} $(INST_TEST) $(EXE_REP_SOL)
+	${PREFIX_EXE}${EXE_REP_SOL} $(INST_TEST)
+
+
+${EXE_REP_SOL}: src/test/test_repair_sol.c src/problem/job_shop_instance.c src/problem/*.h src/solution/*.c src/solution/*.h src/utils.h src/utils.c src/recombination/*.*
 	$(CC) $(MODE_COMPILATION) -o $@ $^ $(CFLAGS)
 
 

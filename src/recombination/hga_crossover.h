@@ -5,7 +5,7 @@
 
 void copy_machine_configuration(s_sol_perms_machs *org, s_sol_perms_machs *dest, int num_mac);
 
-void hga_crossocer(
+void hga_crossover(
     s_sol_perms_machs *p1,
     s_sol_perms_machs *p2,
     s_sol_perms_machs *h1,

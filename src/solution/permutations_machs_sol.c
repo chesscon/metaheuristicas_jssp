@@ -126,4 +126,3 @@ s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
 
 
 
-

@@ -7,7 +7,11 @@
 
 s_sol_perms_machs * select_parent(s_population *pob);
 
-void genera_hijos(s_population *pob, float pc, s_sol_perms_machs *h1, s_sol_perms_machs *h2);
+void mutate_sol(s_sol_perms_machs *sol, float pm);
+
+void mejorar_solucion(s_sol_perms_machs *sol);
+
+void genera_hijos(s_population *pob, float pc, float pm, s_sol_perms_machs *h1, s_sol_perms_machs *h2);
 
 void reemplaza_si_mejor_o_aleatorio(s_population *pob, s_sol_perms_machs *best, s_sol_perms_machs *h);
 
