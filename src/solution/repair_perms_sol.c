@@ -108,6 +108,7 @@ void rearrenge_random_operation(
     s_op_schedule *current_job = job_ops[random_op];
     int mach = current_job->op->machine;
 
+    /*
     printf("\n*** rearrange OP[%d], M%d. (J%d[%d], M%d[%d]) \n", 
         current_job->op->id,
         mach, 
@@ -116,19 +117,26 @@ void rearrenge_random_operation(
         current_job->op->machine,
         current_job->seq_m
     );
+    */
 
     s_op_schedule *current_mach = NULL;
 
     // Buscamos la operacion correspondiente a la maquina:
-    int pos_mc =0;
-    for (int i = 0; i < total_mach_ops; i++) {
+    int pos_mc = -1;
+    for (int i = 0; i < total_mach_ops && pos_mc < 0; i++) {
         current_mach = mach_ops[i];
         if (mach == current_mach->op->machine) {
             pos_mc = i;
-            i = total_mach_ops;
+            break;
         }
     }
 
+    if (current_mach == NULL) {
+        printf("****->>> ERROR!!!!!!!\n");
+        exit(1);
+    }
+
+    /*
     printf("\n*** rearrange2 OP[%d], M%d. (J%d[%d], M%d[%d]) \n", 
         current_mach->op->id,
         mach, 
@@ -137,6 +145,7 @@ void rearrenge_random_operation(
         current_mach->op->machine,
         current_mach->seq_m
     );
+    */
 
     labaleds[current_mach->op->id]--;
     labaleds[current_job->op->id]++;
@@ -145,11 +154,13 @@ void rearrenge_random_operation(
     int pos_b = current_mach->seq_m;
     
     // intercambiamos las operacioens
-    s_operacion *tmp = sol->machs[mach][pos_a].op;
+    s_operacion * tmp = sol->machs[mach][pos_a].op;
     sol->machs[mach][pos_a].op = sol->machs[mach][pos_b].op;
+    sol->machs[mach][pos_a].seq_m = pos_a;
     sol->ops[sol->machs[mach][pos_a].op->id] = &sol->machs[mach][pos_a];
 
     sol->machs[mach][pos_b].op = tmp;
+    sol->machs[mach][pos_b].seq_m = pos_b;
     sol->ops[sol->machs[mach][pos_b].op->id] = &sol->machs[mach][pos_b];
 
     // Actualizamos los conjuntos
@@ -201,6 +212,7 @@ void repair_solution(s_sol_perms_machs *sol) {
     // -2.1 Calcular K = O_J \interserc O_M
     intersection_ops( machs_ops, total_mach_ops, K, &total_insersection, labaleds);
 
+    /*
     printf("O_J = ");
         print_ops(job_ops, total_job_ops);
 
@@ -209,6 +221,7 @@ void repair_solution(s_sol_perms_machs *sol) {
 
         printf("K = ");
         print_ops(K, total_insersection);
+    */
 
     while (total_insersection > 0) {
 
@@ -224,6 +237,7 @@ void repair_solution(s_sol_perms_machs *sol) {
 
         intersection_ops( machs_ops, total_mach_ops, K, &total_insersection, labaleds);
 
+        /*
         printf("\n **O_J = ");
         print_ops(job_ops, total_job_ops);
 
@@ -232,10 +246,12 @@ void repair_solution(s_sol_perms_machs *sol) {
 
         printf("K = ");
         print_ops(K, total_insersection);
+        */
 
-        if (total_insersection == 0 && ( total_job_ops > 0 || total_mach_ops > 0 )) {
+        if (total_insersection == 0 && ( total_job_ops > 0 )) {
             rearrenge_random_operation(sol, job_ops, total_job_ops, machs_ops, total_mach_ops, K, &total_insersection, labaleds);
 
+            /*
             printf("\n *******O_J = ");
             print_ops(job_ops, total_job_ops);
 
@@ -244,9 +260,11 @@ void repair_solution(s_sol_perms_machs *sol) {
 
             printf("\n *******K = ");
             print_ops(K, total_insersection);
+            */
         }
     }
 
+    /*
     printf("O_J = ");
         print_ops(job_ops, total_job_ops);
 
@@ -255,6 +273,6 @@ void repair_solution(s_sol_perms_machs *sol) {
 
         printf("K = ");
         print_ops(K, total_insersection);
-    
+    */
 
 }

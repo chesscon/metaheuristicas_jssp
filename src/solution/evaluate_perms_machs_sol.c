@@ -11,7 +11,7 @@ s_op_schedule * get_predecesor_machine(s_sol_perms_machs *sol, s_op_schedule *op
 }
 
 s_op_schedule * get_sucesor_machine(s_sol_perms_machs *sol, s_op_schedule *op) {
-    if (op != NULL && op->seq_m < sol->inst->num_jobs - 1) {
+    if (op != NULL && op->seq_m < (sol->inst->num_jobs - 1)) {
         return &sol->machs[op->op->machine][op->seq_m+1];
     }
     return NULL;
@@ -25,7 +25,7 @@ s_op_schedule * get_predecesor_job(s_sol_perms_machs *sol, s_op_schedule *op) {
 }
 
 s_op_schedule * get_sucesor_job(s_sol_perms_machs *sol, s_op_schedule *op) {
-    if (op != NULL && op->op->seq < sol->inst->num_machs - 1 ) {
+    if (op != NULL && op->op->seq < (sol->inst->num_machs - 1)  ) {
         return sol->ops[ op->op->id + 1];
     }
     return NULL;
@@ -44,8 +44,9 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
     s_op_schedule *sucesor_job;
     s_op_schedule * sucesor_mach;
 
-    int labeleds[sol->inst->num_jobs*sol->inst->num_jobs];
-    for (int i=0; i < sol->inst->num_jobs*sol->inst->num_jobs; i++) {
+    int total_ops = sol->inst->num_jobs*sol->inst->num_machs;
+    int labeleds[total_ops];
+    for (int i=0; i < total_ops; i++) {
         labeleds[i] = 0;
     }
 
@@ -56,7 +57,7 @@ void calculate_relase_times(s_sol_perms_machs *sol) {
         job_op_current = &sol->inst->jobs[i][0];
         mach_op_current = &sol->machs[job_op_current->machine][0];
 
-        if (mach_op_current->op == job_op_current) {
+        if (mach_op_current->op->id == job_op_current->id) {
             availables[total_availables] = mach_op_current;
             total_availables++;
         }
@@ -133,8 +134,9 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
 
     sol->makespan = 0;
 
-    int labeleds[sol->inst->num_jobs*sol->inst->num_jobs];
-    for (int i=0; i < sol->inst->num_jobs*sol->inst->num_jobs; i++) {
+    int total_ops = sol->inst->num_jobs*sol->inst->num_machs;
+    int labeleds[total_ops];
+    for (int i=0; i < total_ops; i++) {
         labeleds[i] = 0;
     }
 
@@ -144,7 +146,7 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
         job_op_current = &sol->inst->jobs[i][sol->inst->num_machs - 1];
         mach_op_current = &sol->machs[job_op_current->machine][sol->inst->num_jobs - 1];
 
-        if (mach_op_current->op == job_op_current) {
+        if (mach_op_current->op->id == job_op_current->id) {
             availables[total_availables] = mach_op_current;
             total_availables++;
         }
@@ -205,6 +207,12 @@ void calculate_length_tails(s_sol_perms_machs *sol) {
 }
 
 int eval_solution(s_sol_perms_machs *sol) {
+    int total_ops = sol->inst->num_jobs*sol->inst->num_machs;
+    for (int i=0; i < total_ops; i++) {
+        sol->ops[i]->r = -1;
+        sol->ops[i]->q = -1;
+        sol->ops[i]->t = -1;
+    }
     calculate_relase_times(sol);
     calculate_length_tails(sol);
 

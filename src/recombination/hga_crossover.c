@@ -3,13 +3,10 @@
 #include "hga_crossover.h"
 
 void copy_machine_configuration(s_sol_perms_machs *org, s_sol_perms_machs *dest, int idx_mach) {
-
     for (int i =0; i < org->inst->num_jobs; i++) {
         dest->machs[idx_mach][i].op = org->machs[idx_mach][i].op;
-        dest->machs[idx_mach][i].seq_m = org->machs[idx_mach][i].seq_m;
         dest->ops[dest->machs[idx_mach][i].op->id] = &dest->machs[idx_mach][i];
     }
-
 }
 
 void hga_crossover(
@@ -26,16 +23,5 @@ void hga_crossover(
             copy_machine_configuration(p1, h2, i);
             copy_machine_configuration(p2, h1, i);
         }
-    }
-
-    int N = p1->inst->num_jobs * p1->inst->num_machs;
-    for(int i=0; i < N; i++) {
-        h1->ops[i]->r = -1;
-        h1->ops[i]->q = -1;
-        h1->ops[i]->t = -1;
-
-        h2->ops[i]->r = -1;
-        h2->ops[i]->q = -1;
-        h2->ops[i]->t = -1;
     }
 }

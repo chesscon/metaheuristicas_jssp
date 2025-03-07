@@ -18,6 +18,6 @@ s_population * make_random_population( s_jssp *inst, int size );
 
 int evaluate_population( s_population *pob );
 
-int improve_population( s_population *pob )
+int improve_population( s_population *pob );
 
 #endif
