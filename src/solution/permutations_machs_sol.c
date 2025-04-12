@@ -68,9 +68,7 @@ void print_operation_schedule(s_op_schedule *op) {
     }
 }
 
-s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
-    s_sol_perms_machs * sol = NULL;
-    sol = allocate_sol_perms(inst);
+void generate_random_feasible_solution_perm(s_jssp *inst, s_sol_perms_machs *sol) {
     // Generamos contadores para considerar la planficacion en cada maquina
     int machs_free_position[inst->num_machs];
     for (int i = 0; i < inst->num_machs; i++) {
@@ -116,10 +114,15 @@ s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
             total_availables--;
         }
     }
+}
+
+s_sol_perms_machs * make_random_feasible_solution_perms(s_jssp *inst) {
+    s_sol_perms_machs * sol = NULL;
+    sol = allocate_sol_perms(inst);
+    generate_random_feasible_solution_perm(inst, sol);
 
     return sol;
 }
-
 
 
 

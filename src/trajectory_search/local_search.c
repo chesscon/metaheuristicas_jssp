@@ -12,6 +12,7 @@ s_sol_perms_machs * local_search_jssp(s_sol_perms_machs * initial_sol) {
 
     int improve = 1;
     int iteration = 0;
+    printf("** LS *** \n");
 
     while (improve) {
         improve = 0;
@@ -21,6 +22,7 @@ s_sol_perms_machs * local_search_jssp(s_sol_perms_machs * initial_sol) {
         best_index = get_index_neighbor_best(current, neighborhood);
         apply_and_evaluate_move_N1(current, &neighborhood->neighbors[best_index]);
 
+        
         printf("Iter: %d, best: %d, estimate_best_neighbor: %d, exact_best_neighbor: %d \n", 
             iteration, best->makespan, neighborhood->neighbors[best_index].eval, current->makespan
         );

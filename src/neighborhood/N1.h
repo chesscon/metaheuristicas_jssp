@@ -37,6 +37,8 @@ int estimate_evaluation_neighbor( s_sol_perms_machs *sol, s_move * neighbor);
 
 int get_index_neighbor_best( s_sol_perms_machs *sol, s_neighborhood * neighborhood );
 
+void apply_move_N1(s_sol_perms_machs *sol, s_move * neigbor);
+
 int apply_and_evaluate_move_N1( s_sol_perms_machs *sol, s_move * neigbor );
 
 #endif

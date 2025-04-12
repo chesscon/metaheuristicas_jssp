@@ -113,24 +113,23 @@ int get_index_neighbor_best( s_sol_perms_machs *sol, s_neighborhood * neighborho
     return index_best;
 }
 
-int apply_and_evaluate_move_N1( s_sol_perms_machs *sol, s_move * neigbor ) {
+void apply_move_N1(s_sol_perms_machs *sol, s_move * neigbor) {
     int mach = neigbor->a->op->machine;
     int pos_a = neigbor->a->seq_m;
     int pos_b = neigbor->b->seq_m;
 
-    s_operacion *tmp = sol->machs[mach][pos_a].op;
+    s_operacion * tmp = sol->machs[mach][pos_a].op;
     sol->machs[mach][pos_a].op = sol->machs[mach][pos_b].op;
+    sol->machs[mach][pos_a].seq_m = pos_a;
     sol->ops[sol->machs[mach][pos_a].op->id] = &sol->machs[mach][pos_a];
 
     sol->machs[mach][pos_b].op = tmp;
+    sol->machs[mach][pos_b].seq_m = pos_b;
     sol->ops[sol->machs[mach][pos_b].op->id] = &sol->machs[mach][pos_b];
+}
 
-    int totalOps = sol->inst->num_jobs * sol->inst->num_machs;
-    for(int i = 0; i < totalOps; i++) {
-        sol->ops[i]->r = -1;
-        sol->ops[i]->q = -1;
-        sol->ops[i]->t = -1;
-    }
+int apply_and_evaluate_move_N1( s_sol_perms_machs *sol, s_move * neigbor ) {
+    apply_move_N1(sol, neigbor);
 
     sol->makespan = eval_solution(sol);
 

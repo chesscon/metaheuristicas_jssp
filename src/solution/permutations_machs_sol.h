@@ -46,6 +46,8 @@ void print_operation_schedule(s_op_schedule *);
 
 void print_sol_perms_machs(s_sol_perms_machs *);
 
+void generate_random_feasible_solution_perm(s_jssp *inst, s_sol_perms_machs *sol);
+
 s_sol_perms_machs * make_random_feasible_solution_perms( s_jssp *inst );
 
 #endif

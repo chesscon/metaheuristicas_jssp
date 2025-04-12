@@ -26,3 +26,6 @@ make prueba_eval_sol
 `Evaluación de Soluciones`
 - [2] Taillard, Eric D. "Parallel taboo search techniques for the job shop scheduling problem." ORSA journal on Computing 6.2 (1994): 108-117.
 
+`Operador de Cruza (HGA)`
+- Ren, Q., & Wang, Y. P. "A new hybrid genetic algorithm for job shop scheduling problem." Computers
+& Operations Research (2012): 2291–2299.
